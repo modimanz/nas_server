@@ -1,0 +1,8 @@
+---
+
+- name: Install Required Packages
+  apt:
+    name:
+      - nfs-kernel-server
+    state: present
+  become: true

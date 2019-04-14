@@ -1,0 +1,38 @@
+---
+
+- name: Create Folders
+  block:
+    - name: Make sure all the share source folders exist
+      file:
+        path: "{{ nas_shares[index].src }}"
+        state: directory
+        mode: "0755"
+        owner: "{{ nas_shares[index].user }}"
+        group: "{{ nas_shares[index].user }}"
+      become: yes
+
+    - name: Show Basepath
+      debug:
+        msg: "{{ nas_shares[index].path | dirname }}"
+
+    - name: Make sure directrories exist !Needs Deduplication # TODO Deduplicate
+      file:
+        path: "{{ nas_shares[index].path | dirname }}"
+        state: directory
+        owner: "{{ nas_shares[index].user }}"
+        group: "{{ nas_shares[index].user }}"
+        mode: "0755"
+      become: yes
+
+    - name: Create the link to the shares
+      file:
+        src: "{{ nas_shares[index].src }}"
+        dest: "{{ nas_shares[index].path }}"
+        state: link
+        owner: "{{ nas_shares[index].user }}"
+        group: "{{ nas_shares[index].user }}"
+        mode: "0755"
+      become: true
+
+
+

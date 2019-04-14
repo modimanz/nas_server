@@ -1,0 +1,5 @@
+{% for export in nas_shares %}
+{% set nas_mount_options = ['all_squash'] %}
+{% set nas_options = nas_default_options + export.options + nas_mount_options %}
+{{ export.path }}   {{ export.host }}({{ nas_options | join(',') }})
+{% endfor %}

@@ -1,0 +1,41 @@
+---
+- name: Create the nas group
+  group:
+    name: nas
+    state: present
+  become: yes
+
+- name: Create the NAS user accounts
+  user:
+    name: "{{ nas_user.name }}"
+    password: "{{ nas_user.pass }}"
+    update_password: always
+    shell: /bin/bash
+    groups: nas
+  become: yes
+  #register: "nas_user_{{ item.name }}"
+  register: nas_user_results
+
+- name: Show nas_user variable
+  debug:
+    #var: "nas_user_{{ item.name }}"
+    var: nas_user_results
+  #loop: "{{ nas_users }}"
+
+- name: Delete the NAS user Accounts
+  user:
+    name: "{{ nas_user.name }}"
+    state: absent
+  become: true
+  tags:
+    - never
+    - remove
+
+- name: Delete the nas group
+  group:
+    name: nas
+    state: absent
+  become: yes
+  tags:
+    - never
+    - remove

@@ -1,0 +1,39 @@
+nas_user:
+  name: morgan
+  pass: fjgfj949goikgk484dgg
+
+nas_default_options: ["rw", "async", "no_subtree_check", "insecure"]
+
+nas_shares:
+  - src: /sda1/Music
+    path: /share/Music
+    user: morgan
+    options: []
+    backup: /sdb1/backup/Music
+    host: 0.0.0.0
+
+  - src: /sda1/Videos
+    path: /share/Media/Videos
+    user: morgan
+    options: []
+    host: 0.0.0.0
+
+  - src: /sda1/Software
+    path: /share/Software
+    user: morgan
+    options: []
+    host: 0.0.0.0
+
+  - src: /sda1/Pictures
+    path: /share/Pictures
+    user: morgan
+    #options: "[mountpoint=/path/to/share"
+    options: []
+    host: 0.0.0.0
+
+  - src: /sda1/Books
+    path: /share/Books
+    user: morgan
+    #options: "[mountpoint=/path/to/share, all_squash, anonuid]"
+    options: []
+    host: 0.0.0.0

@@ -1,0 +1,17 @@
+---
+
+# TODO: Create a method for backing up utilizing the nas_shares[item][backup] options
+
+- include_tasks: packages.yml
+
+- include_tasks: ufw.yml
+
+- include_tasks: create-users.yml
+
+- include: create_folders.yml
+  loop: "{{ nas_shares }}"
+  loop_control:
+    index_var: index
+
+- include_tasks: setup_shares.yml
+

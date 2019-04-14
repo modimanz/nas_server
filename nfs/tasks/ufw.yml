@@ -1,0 +1,27 @@
+---
+
+- name: Configure Firewall rules
+  become: yes
+  block:
+    - ufw:
+        state: enabled
+        policy: allow
+
+    - ufw:
+        logging: on
+
+    - ufw:
+        rule: allow
+        port: ssh
+
+    - ufw:
+        rule: allow
+        port: http
+
+    - name: Allow NFS hosts
+      ufw:
+        rule: allow
+        port: nfs
+        src: "{{ item.host}}/32"
+        proto: any
+      loop: "{{ nas_shares }}"
